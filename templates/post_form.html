@@ -9,14 +9,14 @@
       </div>
       <div class="modal-body">
         <!-- Modal form -->
-        <form action="{{ url_for('create_post') }}" method="post">
+        <form action="{{ url_for('posts.create_post') }}" method="post">
           <div class="mb-3">
-            <label for="postTitle" class="form-label">Post Title</label>
-            <input type="text" class="form-control" id="postTitle" name="title" placeholder="Your post title here!" required>
+            <label for="post_title" class="form-label">Post Title</label>
+            <input type="text" class="form-control" id="post_title" name="post_title" placeholder="Your post title here!" required>
           </div>
           <div class="mb-3">
-            <label for="postText" class="form-label">Post Text</label>
-            <textarea class="form-control" id="postText" name="content" rows="3" placeholder="Your post text here!" required></textarea>
+            <label for="content" class="form-label">Post Content</label>
+            <textarea class="form-control" id="content" name="content" rows="3" placeholder="Your post text here!" required></textarea>
           </div>
           <button type="submit" class="btn btn-primary">Create!</button>
         </form>

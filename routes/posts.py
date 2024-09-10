@@ -1,28 +1,21 @@
-from flask import Blueprint, render_template, request
-from database.models.user_and_posts import Posts
+from flask import Blueprint, render_template, request, redirect, url_for
+from database.models.user_and_posts import Posts, User
 
 posts_route = Blueprint ('posts', __name__)
 
-@posts_route.route("/posts")
-def post_list():
-    """This function list every users"""
-    posts = Posts.select()
-    return render_template('post_list.html', posts = posts)
-
-@posts_route.route("/post")
+@posts_route.route('/add', methods = ['POST'])
 def create_post():
-    """This function create a post"""
-    
-    title = request.form.get('title')
-    content = request.form.get('content')
+    """Function to create a new post"""
+
+    user, created = User.get_or_create(
+        user = 'default_user',
+        defaults = {'email': 'default@example.com', 'password': '12345'}
+    )
 
     new_post = Posts.create(
-        username = data['username'],
-        content = data['content'],
-        date_of_post = data['date_of_post'],
-        
-     )
-     
-    return render_template('post_creation', posts = new_post)
+        username=user,
+        post_title=request.form['post_title'],
+        content=request.form['content'],
+    )
     
-
+    return redirect(url_for('home_page.home'))

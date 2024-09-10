@@ -6,10 +6,28 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 1rem;
-    height: 60px; /* Ajuste conforme necessário */
+    padding: 0 2rem; 
+    height: 80px; 
+    width: calc(100% - 20px); 
     background-color: #f8f9fa;
+    margin-left: 10px;
+}
+
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px; 
+    align-items: start; 
+}
+
+.post-item {
+    flex: 1 1 300px; 
+}
+
+.card {
     position: relative;
+    top: 100px;
 }
 
 .logo {
@@ -29,18 +47,20 @@ body {
 }
 
 .add {
-   border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      background-color: #00aeff;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: absolute;
-      left: 50%;
-      right: 50%;
-      border: 0px;
-      font-size: 24px;
-      cursor: pointer;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-color: #00aeff;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
