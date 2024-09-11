@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from database.models.user_and_posts import Posts, User
 
 posts_route = Blueprint ('posts', __name__)
@@ -26,4 +26,12 @@ def delete_post(post_id):
     post = Posts.get_or_none(Posts.id == post_id)
     if post:
         post.delete_instance()
+        flash("Post deleted with successfully", "success") #message of success
+    else:
+        flash("You can't delete this post!", "error") # message of error
     return redirect(url_for('home_page.home'))
+
+@posts_route.route('/edit_post/<int:post_id>', methods = ['POST'])
+def edit_post(post_id):
+    """Function to edit a post"""
+    post 
