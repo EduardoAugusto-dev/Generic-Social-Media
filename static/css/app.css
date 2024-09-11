@@ -13,6 +13,19 @@ body {
     margin-left: 10px;
 }
 
+.btn_options {
+    position: absolute;
+    right: 0%;
+    top: 0%;
+    border: 0;
+    width: 50px;
+    height: 50px;
+    color: black;
+    background-color: white;
+    border: 0;
+    font-size: 23px;
+    cursor: pointer;
+}
 
 .container {
     display: grid;

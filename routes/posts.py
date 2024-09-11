@@ -3,7 +3,7 @@ from database.models.user_and_posts import Posts, User
 
 posts_route = Blueprint ('posts', __name__)
 
-@posts_route.route('/add', methods = ['POST'])
+@posts_route.route('/add_post', methods = ['POST'])
 def create_post():
     """Function to create a new post"""
 
@@ -18,4 +18,12 @@ def create_post():
         content=request.form['content'],
     )
     
+    return redirect(url_for('home_page.home'))
+
+@posts_route.route('/delete_post/<int:post_id>', methods = ['POST'])
+def delete_post(post_id):
+    """Function to delete a post"""
+    post = Posts.get_or_none(Posts.id == post_id)
+    if post:
+        post.delete_instance()
     return redirect(url_for('home_page.home'))
