@@ -7,5 +7,4 @@ home_route = Blueprint('home_page', __name__)
 def home():
     """This function list every users"""
     posts = Posts.select()
-    print(f"Number of posts: {posts.count()}") 
     return render_template('index.html', posts=posts)

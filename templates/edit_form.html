@@ -1,0 +1,27 @@
+<div class="modal fade" id="edit_post_{{ post.id }}" tabindex="-1" aria-labelledby="editPostLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editPostLabel">Editing your post</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="{{ url_for('posts.update_post', post_id=post.id) }}" method="post">
+            <div class="mb-3">
+              <label for="post_title_{{ post.id }}" class="form-label">Post Title</label>
+              <input type="text" class="form-control" id="post_title_{{ post.id }}" name="post_title" value="{{ post.post_title }}" placeholder="Your post title here!" required>
+            </div>
+            <div class="mb-3">
+              <label for="content_{{ post.id }}" class="form-label">Post Content</label>
+              <textarea class="form-control" id="content_{{ post.id }}" name="content" rows="3" placeholder="Your post text here!" required>{{ post.content }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Finish</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

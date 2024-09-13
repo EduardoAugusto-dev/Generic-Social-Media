@@ -31,7 +31,32 @@ def delete_post(post_id):
         flash("You can't delete this post!", "error") # message of error
     return redirect(url_for('home_page.home'))
 
-@posts_route.route('/edit_post/<int:post_id>', methods = ['POST'])
+@posts_route.route('/edit_post/<int:post_id>', methods = ['GET'])
 def edit_post(post_id):
-    """Function to edit a post"""
-    post 
+    """Function to renderize the form for edit a post"""
+    post = Posts.get_or_none (Posts.id == post_id)
+
+    if posts is None:
+        flash("Post not found", "error")
+        return redirect (url_for('home_page.home'))
+
+    return render_template ('form_edit.html', post=post)
+
+
+@posts_route.route('/update_post/<int:post_id>', methods = ['POST'])
+def update_post(post_id):
+    """Function to update a post, here the code actualize the info of the post"""
+    print(f"Atualizando o post {post_id}")
+    post = Posts.get_by_id(post_id)
+    if request.method == 'POST':
+        post.post_title = request.form ['post_title']
+        post.content = request.form ['content']
+        post.save()
+        flash("Post updated with succesfully", "success")
+        return redirect(url_for('home_page.home'))
+
+@posts_route.route('/like_post/<int:post_id>', methods = ['POST'])
+def like_system(post_id):
+    pass
+
+

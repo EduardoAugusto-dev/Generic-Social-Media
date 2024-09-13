@@ -27,13 +27,19 @@
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ post.id }}">
           
           <!--Form action do edit a post-->
-            <li><a class="dropdown-item" href="#">Editar</a></li>
+          <li>
+            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_post_{{ post.id }}">
+                Edit
+              </button>
+            </form>
+          </li>
+
 
           <!--Form action to delete post-->
             <li>
               <form action="{{ url_for('posts.delete_post', post_id=post.id) }}" method="POST" style="margin: 0;">
-                <button type="submit" class="dropdown-item" onclick="return confirm('Tem certeza que deseja excluir este post?');">
-                  Excluir
+                <button type="submit" class="dropdown-item" onclick="return confirm('Are you sure, if you want exclude this post?');">
+                  Delete
                 </button>
               </form>
             </li>
@@ -47,8 +53,12 @@
         <div class="card-body">
           <h5 class="card-title">{{ post.post_title }}</h5>
           <p class="card-text">{{ post.content }}</p>
-          <a href="#" class="btn btn-primary">Like</a>
-          <a href="#" class="btn btn-danger">Dislike</a>
+          <a class="btn btn-primary">
+            <i class="bi bi-hand-thumbs-up"></i> 
+          </a>
+          <a class="btn btn-danger">
+            <i class="bi bi-hand-thumbs-down"></i> 
+          </a>
         </div>
       </div>
     </div>

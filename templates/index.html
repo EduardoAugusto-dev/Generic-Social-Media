@@ -42,6 +42,12 @@
   </div>
 
   <div>
+      {% for post in posts %}
+        {% include 'edit_form.html' %}
+      {% endfor %}  
+  </div>
+
+  <div>
     {% include 'post_list.html' %}
   </div>
 
