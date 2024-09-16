@@ -53,12 +53,12 @@
         <div class="card-body">
           <h5 class="card-title">{{ post.post_title }}</h5>
           <p class="card-text">{{ post.content }}</p>
-          <a class="btn btn-primary">
-            <i class="bi bi-hand-thumbs-up"></i> 
-          </a>
-          <a class="btn btn-danger">
-            <i class="bi bi-hand-thumbs-down"></i> 
-          </a>
+          <form action="{{ url_for('posts.like_system', post_id=post.id) }}" method="POST" style="display:inline;">
+            <button type="submit" class="btn btn-primary {% if user in post.likes %}liked{% endif %}">
+              <i class="bi bi-hand-thumbs-up"></i>
+              <span>{{ post.likes.count() }}</span>
+            </button>
+          </form>
         </div>
       </div>
     </div>

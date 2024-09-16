@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from database.models.user_and_posts import Posts, User
+from database.models.user_and_posts import Posts, User, Like
 
 posts_route = Blueprint ('posts', __name__)
 
@@ -25,6 +25,7 @@ def delete_post(post_id):
     """Function to delete a post"""
     post = Posts.get_or_none(Posts.id == post_id)
     if post:
+        Like.delete().where(Like.post == post).execute()
         post.delete_instance()
         flash("Post deleted with successfully", "success") #message of success
     else:
@@ -57,6 +58,21 @@ def update_post(post_id):
 
 @posts_route.route('/like_post/<int:post_id>', methods = ['POST'])
 def like_system(post_id):
-    pass
+    user = User.get(User.user == 'default_user')
+
+    post = Posts.get(Posts.id == post_id)
+
+    like_exists = Like.select().where((Like.user == user) & (Like.post == post)).exists()
+
+    if like_exists:
+        Like.delete().where((Like.user == user) & (Like.post == post)).execute()
+        post.likes -=1
+    else:
+        Like.create(user = user, post = post)
+        post.likes += 1
+
+    post.save(  )
+
+    return redirect(url_for('home_page.home'))
 
 

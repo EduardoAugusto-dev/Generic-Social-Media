@@ -3,6 +3,11 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+#databases
+.postsmanager.db
+.usermanager.db
+.likemanager.db
+
 # C extensions
 *.so
 

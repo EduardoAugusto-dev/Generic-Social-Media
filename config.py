@@ -2,8 +2,8 @@ from routes.home import home_route
 from routes.user import user_route
 from routes.posts import posts_route
 from routes.login import login_route
-from database.database import db_users, db_posts
-from database.models.user_and_posts import User, Posts
+from database.database import db_users, db_posts, db_like
+from database.models.user_and_posts import User, Posts, Like
 
 
 def general_config(app):
@@ -20,5 +20,7 @@ def routes_config(app):
 def db_config():
     db_posts.connect()
     db_users.connect()
+    db_like.connect()
     db_users.create_tables([User])
     db_posts.create_tables([Posts])
+    db_like.create_tables([Like])
