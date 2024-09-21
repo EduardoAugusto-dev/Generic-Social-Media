@@ -5,17 +5,16 @@ from routes.login import login_route
 from database.database import db_users, db_posts, db_like
 from database.models.user_and_posts import User, Posts, Like
 
-
 def general_config(app):
     routes_config(app)
     db_config()
 
 def routes_config(app):
-    #routes
+    # routes
     app.register_blueprint(home_route)
-    app.register_blueprint(user_route, url_prefix = '/user' )
-    app.register_blueprint(posts_route, url_prefix = '/posts')
-    app.register_blueprint(login_route, url_prefix = '/login')
+    app.register_blueprint(user_route, url_prefix='/user')
+    app.register_blueprint(posts_route, url_prefix='/posts')
+    app.register_blueprint(login_route, url_prefix='/login')
 
 def db_config():
     db_posts.connect()

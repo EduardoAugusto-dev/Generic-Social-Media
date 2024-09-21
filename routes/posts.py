@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from database.models.user_and_posts import Posts, User, Like
+from flask_login import current_user
 
 posts_route = Blueprint ('posts', __name__)
 
@@ -7,13 +8,8 @@ posts_route = Blueprint ('posts', __name__)
 def create_post():
     """Function to create a new post"""
 
-    user, created = User.get_or_create(
-        user = 'default_user',
-        defaults = {'email': 'default@example.com', 'password': '12345'}
-    )
-
     new_post = Posts.create(
-        username=user,
+        username= current_user,
         post_title=request.form['post_title'],
         content=request.form['content'],
     )
@@ -58,20 +54,23 @@ def update_post(post_id):
 
 @posts_route.route('/like_post/<int:post_id>', methods = ['POST'])
 def like_system(post_id):
-    user = User.get(User.user == 'default_user')
+    user = current_user
 
-    post = Posts.get(Posts.id == post_id)
+    post = Posts.get_or_none(Posts.id == post_id)
+    if not post:
+        flash("Post not found", "error")
+        return redirect(url_for('home_page.home'))
 
-    like_exists = Like.select().where((Like.user == user) & (Like.post == post)).exists()
+    like_exists = Like.select().where((Like.user == user.id) & (Like.post == post.id)).exists()
 
     if like_exists:
-        Like.delete().where((Like.user == user) & (Like.post == post)).execute()
+        Like.delete().where((Like.user == user.id) & (Like.post == post.id)).execute()
         post.likes -=1
     else:
         Like.create(user = user, post = post)
         post.likes += 1
 
-    post.save(  )
+    post.save()
 
     return redirect(url_for('home_page.home'))
 

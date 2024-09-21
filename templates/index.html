@@ -22,15 +22,17 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mt-2">
-          <li class="nav-item config">
+          <li class="nav-item config item-style">
             <a href="/settings" class="nav-link">
               <i class="bi bi-gear"></i> Config
             </a>
           </li>
-          <li class="nav-item logout">
-            <a href="/logout" class="nav-link">
-              <i class="bi bi-box-arrow-right"></i> Logout
-            </a>
+          <li class="nav-item logout item-style ">
+            <form action="{{ url_for('login.logout') }}" method="post" class="d-inline">
+              <button type="submit" class="btn btn-link nav-link">
+                <i class="bi bi-box-arrow-right"></i> Logout
+              </button>
+            </form>
           </li>
         </ul>
       </div>
