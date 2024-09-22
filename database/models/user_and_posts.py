@@ -18,7 +18,7 @@ class User(Model, UserMixin):
 
 # Posts model
 class Posts(Model):
-    username = ForeignKeyField(User)
+    user = ForeignKeyField(User, backref='posts')
     post_title = TextField()
     content = TextField()
     date_of_post = DateTimeField(default=datetime.datetime.now)

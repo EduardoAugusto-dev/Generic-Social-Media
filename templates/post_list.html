@@ -24,6 +24,7 @@
             ...
           </button>
 
+          {%  if post.user.id == current_user.id %}
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ post.id }}">
           
           <!--Form action do edit a post-->
@@ -44,10 +45,11 @@
               </form>
             </li>
           </ul>
+          {% endif %}
         </div>
 
       <!--Card to show the post-->
-        <h4 class="card-title">{{ post.username.username }}</h4>
+        <h4 class="card-title">{{ post.user.username }}</h4>
         <hr>
         <img src="..." class="card-img-top" alt="...">
         <div class="card-body">

@@ -9,7 +9,7 @@ def create_post():
     """Function to create a new post"""
 
     new_post = Posts.create(
-        username= current_user,
+        user= current_user,
         post_title=request.form['post_title'],
         content=request.form['content'],
     )
@@ -19,14 +19,16 @@ def create_post():
 @posts_route.route('/delete_post/<int:post_id>', methods = ['POST'])
 def delete_post(post_id):
     """Function to delete a post"""
+
     post = Posts.get_or_none(Posts.id == post_id)
-    if post:
+
+    if post.user.id != current_user.id:
+        flash ("You can't exclude a post who are not yours!", "danger")
+    else:
         Like.delete().where(Like.post == post).execute()
         post.delete_instance()
         flash("Post deleted with successfully", "success") #message of success
-    else:
-        flash("You can't delete this post!", "error") # message of error
-    return redirect(url_for('home_page.home'))
+        return redirect(url_for('home_page.home'))
 
 @posts_route.route('/edit_post/<int:post_id>', methods = ['GET'])
 def edit_post(post_id):
@@ -45,6 +47,10 @@ def update_post(post_id):
     """Function to update a post, here the code actualize the info of the post"""
     print(f"Atualizando o post {post_id}")
     post = Posts.get_by_id(post_id)
+
+    if post.user.id != current_user.id:
+        flash ("You can't edit a post who are not yours!", "danger")
+
     if request.method == 'POST':
         post.post_title = request.form ['post_title']
         post.content = request.form ['content']
