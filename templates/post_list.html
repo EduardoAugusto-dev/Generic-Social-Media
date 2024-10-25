@@ -12,45 +12,38 @@
       </div>
     {% endif %}
   {% endwith %}
-
   <div class="container">
     {% for post in posts %}
     <div class="post-item">
       <div class="d-flex justify-content-center">
         <div class="card" id="user-post-card" style="width: 18rem;">
-
-          <!-- Exibe o botão de opções somente para o dono do post -->
           {% if post.user.id == current_user.id %}
           <div class="dropdown">
             <button class="btn btn-secondary btn_options" type="button" id="dropdownMenuButton{{ post.id }}" data-bs-toggle="dropdown" aria-expanded="false">
               ...
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ post.id }}">
-              <!-- Form action do editar o post -->
               <li>
-                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_post_{{ post.id }}">
-                  Editar
-                </button>
+                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_post_{{ post.id }}">Editar</button>
               </li>
-
-              <!-- Form action para excluir o post -->
               <li>
                 <form action="{{ url_for('posts.delete_post', post_id=post.id) }}" method="POST" style="margin: 0;">
-                  <button type="submit" class="dropdown-item" onclick="return confirm('Tem certeza que deseja excluir este post?');">
-                    Excluir
-                  </button>
+                  <button type="submit" class="dropdown-item" onclick="return confirm('Tem certeza que deseja excluir este post?');">Excluir</button>
                 </form>
               </li>
             </ul>
           </div>
           {% endif %}
-
-          <!-- Card para exibir o post -->
           <h4 class="card-title">{{ post.user.username }}</h4>
           <hr>
-          <img src="..." class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">{{ post.post_title }}</h5>
+            {% if post.image_path %}
+            <img src="{{ url_for('static', filename=post.image_path.replace('\\', '/')) }}" alt="Post Image" style="max-width: 100%;">
+            <script>console.log("Image path: {{ url_for('static', filename=post.image_path.replace('\\', '/')) }}")</script>
+        {% else %}
+            <img src="default_image.png" alt="No Image" style="max-width: 100%;">
+        {% endif %}
             <p class="card-text">{{ post.content }}</p>
             <form action="{{ url_for('posts.like_system', post_id=post.id) }}" method="POST" style="display:inline;">
               <button type="submit" class="btn btn-primary {% if user in post.likes %}liked{% endif %}">

@@ -8,17 +8,26 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <!-- Modal form -->
-        <form action="{{ url_for('posts.create_post') }}" method="post">
+        <!-- Modal form using FlaskForm -->
+        <form action="{{ url_for('posts.create_post') }}" method="post" enctype="multipart/form-data">
+          {{ form.hidden_tag() }}
+          
           <div class="mb-3">
-            <label for="post_title" class="form-label">Post Title</label>
-            <input type="text" class="form-control" id="post_title" name="post_title" placeholder="Your post title here!" required>
+            {{ form.title.label(class="form-label") }}
+            {{ form.title(class="form-control", id="post_title", placeholder="Your post title here!") }}
           </div>
+          
           <div class="mb-3">
-            <label for="content" class="form-label">Post Content</label>
-            <textarea class="form-control" id="content" name="content" rows="3" placeholder="Your post text here!" required></textarea>
+            {{ form.content.label(class="form-label") }}
+            {{ form.content(class="form-control", id="content", rows="3", placeholder="Your post text here!") }}
           </div>
-          <button type="submit" class="btn btn-primary">Create!</button>
+          
+          <div class="mb-3">
+            {{ form.image.label(class="form-label") }}
+            {{ form.image(class="form-control", id="postImage") }}
+          </div>
+          
+          <button type="submit" class="btn btn-primary">{{ form.submit.label }}</button>
         </form>
       </div>
       <div class="modal-footer">

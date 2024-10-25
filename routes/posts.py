@@ -1,20 +1,36 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from database.models.user_and_posts import Posts, User, Like
+from database.models.user_and_posts import Posts, User, Like, PostForm
 from flask_login import current_user
+from werkzeug.utils import secure_filename
+import os
 
 posts_route = Blueprint ('posts', __name__)
 
-@posts_route.route('/add_post', methods = ['POST'])
-def create_post():
-    """Function to create a new post"""
+from main import app 
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
-    new_post = Posts.create(
-        user= current_user,
-        post_title=request.form['post_title'],
-        content=request.form['content'],
-    )
-    
-    return redirect(url_for('home_page.home'))
+@posts_route.route('/create_post', methods=['GET', 'POST'])
+def create_post():
+    form = PostForm()
+    if form.validate_on_submit():
+        title = form.post_title.data
+        content = form.content.data
+        image = form.image.data
+        image_path = None
+        if image:
+            filename = secure_filename(image.filename)
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            image.save(filepath)
+            image_path = 'uploads/' + filename  # Garantir que o caminho seja `uploads/nome_do_arquivo`
+        print(f'Creating post: Title={title}, Content={content}, ImagePath={image_path}')
+        new_post = Posts.create(user=current_user, post_title=title, content=content, image_path=image_path)
+        flash('Post created successfully', 'success')
+        return redirect(url_for('home'))
+    if form.errors:
+        flash(f'Error: {form.errors}', 'error')
+    posts = Posts.select()
+    return render_template('index.html', posts=posts, form=form)
 
 @posts_route.route('/delete_post/<int:post_id>', methods = ['POST'])
 def delete_post(post_id):

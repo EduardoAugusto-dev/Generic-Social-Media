@@ -41,19 +41,17 @@
 
   <div>
     {% include 'post_form.html' %}
-  </div>
-
-  <div>
-      {% for post in posts %}
-        {% include 'edit_form.html' %}
-      {% endfor %}  
-  </div>
-
-  <div>
-    {% include 'post_list.html' %}
-  </div>
-
 </div>
+<div>
+    <!-- Verificação para ver se os posts estão sendo recuperados -->
+    {% for post in posts %}
+        {% include 'edit_form.html' %}
+    {% endfor %}
+</div>
+<div>
+    {% include 'post_list.html' %}
+</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
