@@ -14,19 +14,19 @@ def allowed_file(filename):
 def create_post():
     form = PostForm()
     if form.validate_on_submit():
-        title = form.post_title.data
+        title = form.title.data
         content = form.content.data
         image = form.image.data
         image_path = None
-        if image:
-            filename = secure_filename(image.filename)
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            image.save(filepath)
-            image_path = 'uploads/' + filename  # Garantir que o caminho seja `uploads/nome_do_arquivo`
+    if image:
+        filename = secure_filename(image.filename)
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        image.save(filepath)
+        image_path = filename
         print(f'Creating post: Title={title}, Content={content}, ImagePath={image_path}')
         new_post = Posts.create(user=current_user, post_title=title, content=content, image_path=image_path)
         flash('Post created successfully', 'success')
-        return redirect(url_for('home'))
+        return redirect(url_for('home_page.home'))
     if form.errors:
         flash(f'Error: {form.errors}', 'error')
     posts = Posts.select()

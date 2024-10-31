@@ -39,8 +39,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ post.post_title }}</h5>
             {% if post.image_path %}
-            <img src="{{ url_for('static', filename=post.image_path.replace('\\', '/')) }}" alt="Post Image" style="max-width: 100%;">
-            <script>console.log("Image path: {{ url_for('static', filename=post.image_path.replace('\\', '/')) }}")</script>
+            <img src="{{ url_for('uploaded_file', filename=post.image_path) }}" alt="Imagem do post" class="post_image">
         {% else %}
             <img src="default_image.png" alt="No Image" style="max-width: 100%;">
         {% endif %}

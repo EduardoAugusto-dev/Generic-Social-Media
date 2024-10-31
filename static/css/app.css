@@ -51,14 +51,17 @@ body {
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px; 
-    align-items: start; 
+    align-items: start;
+    margin-top: 30px; 
 }
 
 .post-item {
     flex: 1 1 300px; 
+    margin-top: 100px;
 }
 
-.card {
+
+.card-login {
     position: relative;
     top: 150px;
 }
@@ -101,4 +104,16 @@ body {
 .btn.liked {
     background-color: #007bff;
     color: white;
+}
+
+.post_image {
+    width: 250px; 
+    height: auto;
+    display: inline-block;
+}
+
+@media (max-width: 600px) {
+    .post-image {
+        max-width: 100%;
+    }
 }
